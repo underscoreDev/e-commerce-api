@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { catchAsync } from "../utils/catchAsync";
 import {
   getAllProducts,
   getOneProduct,
@@ -9,7 +10,12 @@ import {
 
 const productRouter = Router();
 
-productRouter.route("/").get(getAllProducts).post(createProduct);
-productRouter.route("/:id").get(getOneProduct).delete(deleteProduct).put(updateProduct);
+productRouter.route("/").get(catchAsync(getAllProducts)).post(catchAsync(createProduct));
+
+productRouter
+  .route("/:id")
+  .get(catchAsync(getOneProduct))
+  .delete(catchAsync(deleteProduct))
+  .put(catchAsync(updateProduct));
 
 export default productRouter;
