@@ -48,7 +48,7 @@ const ProductsModel = class {
   updateProduct = async (product: ProductsModelProps): Promise<ProductsModelProps[]> => {
     try {
       const sql =
-        "UPDATE products SET product_name=$1,price=$2, category=$3 WHERE product_id=$4 RETURNING *";
+        "UPDATE products SET product_name=$1, price=$2,category=$3 WHERE product_id=$4 RETURNING *";
       const conn = await pgClient.connect();
       const result = await conn.query(sql, [
         product.product_name,
