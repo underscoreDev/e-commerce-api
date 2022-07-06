@@ -1,4 +1,5 @@
 import pgClient from "../database";
+import { AppError } from "../utils/appError";
 
 interface ProductsModelProps {
   product_id?: string;
@@ -16,7 +17,7 @@ const ProductsModel = class {
       conn.release();
       return result.rows;
     } catch (error) {
-      throw new Error(`Cannot Get All Products ${error}`);
+      throw new AppError(`Cannot Get All Products ${error}`, 400);
     }
   };
 
@@ -28,7 +29,7 @@ const ProductsModel = class {
       conn.release();
       return result.rows[0];
     } catch (error) {
-      throw new Error(`Cannot Get One Product ${error}`);
+      throw new AppError(`Cannot Get One Product ${error}`, 400);
     }
   };
 
@@ -41,7 +42,7 @@ const ProductsModel = class {
       conn.release();
       return result.rows[0];
     } catch (error) {
-      throw new Error(`Cannot Create Product ${error}`);
+      throw new AppError(`Cannot Create Product ${error}`, 400);
     }
   };
 
@@ -59,7 +60,7 @@ const ProductsModel = class {
       conn.release();
       return result.rows;
     } catch (error) {
-      throw new Error(`Cannot update Product ${error}`);
+      throw new AppError(`Cannot update Product ${error}`, 400);
     }
   };
 
@@ -71,7 +72,7 @@ const ProductsModel = class {
       conn.release();
       return result.rows;
     } catch (error) {
-      throw new Error(`Cannot delete Product ${error}`);
+      throw new AppError(`Cannot delete Product ${error}`, 400);
     }
   };
 };
