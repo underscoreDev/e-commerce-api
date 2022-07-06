@@ -2,6 +2,7 @@ import { AppError } from "./utils/appError";
 import productRouter from "./routes/product.route";
 import express, { Application, Request, Response } from "express";
 import { globalErrorHandler } from "./controllers/error.controller";
+import userRouter from "./routes/user.route";
 
 const app: Application = express();
 app.use(express.json());
@@ -11,6 +12,7 @@ app.get("/", (_req: Request, res: Response) =>
 );
 
 app.use("/api/v1/product", productRouter);
+app.use("/api/v1/users", userRouter);
 
 app.all("*", (req, _res, next) =>
   next(new AppError(`Cannot find ${req.originalUrl} on this server`, 400))
