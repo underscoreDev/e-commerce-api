@@ -24,9 +24,6 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 
   return res.status(200).json({
     status: "Signup successful",
-    data: {
-      user,
-    },
     token,
   });
 };
