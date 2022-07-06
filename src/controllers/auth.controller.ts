@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 const { JWT_TOKEN_SECRET } = process.env;
 const Auth = new AuthModel();
 
-const signJwt = async (user: AuthModelProps[]) =>
+const signJwt = async (user: AuthModelProps) =>
   jwt.sign({ user }, JWT_TOKEN_SECRET || "secret", {
     expiresIn: "10d",
   });

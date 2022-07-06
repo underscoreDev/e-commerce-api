@@ -16,7 +16,7 @@ export interface AuthModelProps {
 const { PEPPER } = process.env;
 
 export const AuthModel = class {
-  createUser = async (user: AuthModelProps): Promise<AuthModelProps[]> => {
+  createUser = async (user: AuthModelProps): Promise<AuthModelProps> => {
     try {
       const sql =
         "INSERT INTO users (firstname, lastname, email, password) VALUES ($1,$2,$3,$4) RETURNING *";
@@ -25,7 +25,7 @@ export const AuthModel = class {
       const hash = await bcrypt.hash(user.password + PEPPER, 12);
       const result = await conn.query(sql, [user.firstname, user.lastname, user.email, hash]);
       conn.release();
-      return result.rows;
+      return result.rows[0];
     } catch (error) {
       throw new AppError(`Cannot create user ${error}`, 400);
     }
