@@ -26,12 +26,10 @@ export const getOneUser = async (req: Request, res: Response) => {
 
 export const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const users = await Users.deleteUser(id);
+  await Users.deleteUser(id);
   res.status(200).json({
-    status: "success",
-    data: {
-      users,
-    },
+    status: "Deleted successfully",
+    data: null,
   });
 };
 

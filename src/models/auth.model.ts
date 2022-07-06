@@ -13,15 +13,16 @@ export interface AuthModelProps {
   password: string;
 }
 
-const { PEPPER, SALT_ROUNDS } = process.env;
+const { PEPPER } = process.env;
 
 export const AuthModel = class {
   createUser = async (user: AuthModelProps): Promise<AuthModelProps[]> => {
     try {
       const sql =
-        "INSERT INTO users (firstname, lastname, email password) VALUES $1, $2, $3, $4 RETURNING *";
+        "INSERT INTO users (firstname, lastname, email, password) VALUES ($1,$2,$3,$4) RETURNING *";
       const conn = await pgClient.connect();
-      const hash = await bcrypt.hash(user.password + PEPPER, SALT_ROUNDS || 10);
+
+      const hash = await bcrypt.hash(user.password + PEPPER, 12);
       const result = await conn.query(sql, [user.firstname, user.lastname, user.email, hash]);
       conn.release();
       return result.rows;

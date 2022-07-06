@@ -11,7 +11,7 @@ const userRouter = Router();
 
 userRouter.route("/").get(catchAsync(getAllUsers));
 userRouter
-  .route("/id")
+  .route("/:id")
   .get(catchAsync(getOneUser))
   .delete(catchAsync(deleteUser))
   .put(catchAsync(updateUserInfo));
