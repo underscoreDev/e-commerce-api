@@ -66,3 +66,27 @@ export const deleteProduct = async (req: Request, res: Response, next: NextFunct
     data: null,
   });
 };
+
+export const getByCategory = async (req: Request, res: Response) => {
+  const { category } = req.params;
+
+  const products = await Products.getProductsByCategory(category);
+
+  res.status(200).json({
+    status: "Successful",
+    data: {
+      products,
+    },
+  });
+};
+
+export const top5Products = async (_req: Request, res: Response) => {
+  const products = await Products.topProducts();
+
+  res.status(200).json({
+    status: "Successful",
+    data: {
+      products,
+    },
+  });
+};

@@ -1,10 +1,13 @@
 import { Router } from "express";
 import { catchAsync } from "../utils/catchAsync";
-import { register, checkLoginCredentials, login, requestJwt } from "../controllers/auth.controller";
+import { requestTokenAuthorization } from "../services/authService";
+import { register, checkLoginCredentials, login } from "../controllers/auth.controller";
 
 const authRouter = Router();
 
 authRouter.route("/register").post(catchAsync(register));
-authRouter.route("/login").post(requestJwt, catchAsync(checkLoginCredentials), catchAsync(login));
+authRouter
+  .route("/login")
+  .post(requestTokenAuthorization, catchAsync(checkLoginCredentials), catchAsync(login));
 
 export default authRouter;

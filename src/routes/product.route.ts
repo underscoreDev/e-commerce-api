@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { catchAsync } from "../utils/catchAsync";
-import { requestJwt, VerifyUserJwt } from "../controllers/auth.controller";
+import { getByCategory, top5Products } from "../controllers/product.controller";
+import { requestTokenAuthorization, validateUserToken } from "../services/authService";
 import {
   getAllProducts,
   getOneProduct,
@@ -13,13 +14,19 @@ const productRouter = Router();
 
 productRouter
   .route("/")
-  .get(catchAsync(getAllProducts))
-  .post(requestJwt, catchAsync(createProduct));
+  .get(requestTokenAuthorization, catchAsync(getAllProducts))
+  .post(requestTokenAuthorization, catchAsync(createProduct));
+
+productRouter
+  .route("/category/:category")
+  .get(requestTokenAuthorization, catchAsync(getByCategory));
+
+productRouter.route("/top-5").get(requestTokenAuthorization, catchAsync(top5Products));
 
 productRouter
   .route("/:id")
-  .get(requestJwt, catchAsync(getOneProduct))
-  .delete(requestJwt, VerifyUserJwt, catchAsync(deleteProduct))
-  .put(requestJwt, VerifyUserJwt, catchAsync(updateProduct));
+  .get(requestTokenAuthorization, catchAsync(getOneProduct))
+  .delete(requestTokenAuthorization, validateUserToken, catchAsync(deleteProduct))
+  .put(requestTokenAuthorization, validateUserToken, catchAsync(updateProduct));
 
 export default productRouter;

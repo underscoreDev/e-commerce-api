@@ -6,16 +6,16 @@ import {
   updateUserInfo,
   deleteUser,
 } from "../controllers/user.controller";
-import { requestJwt, VerifyUserJwt } from "../controllers/auth.controller";
+import { requestTokenAuthorization, validateUserToken } from "../services/authService";
 
 const userRouter = Router();
 
-userRouter.route("/").get(requestJwt, catchAsync(getAllUsers));
+userRouter.route("/").get(requestTokenAuthorization, catchAsync(getAllUsers));
 
 userRouter
   .route("/:id")
-  .get(requestJwt, catchAsync(getOneUser))
-  .delete(requestJwt, VerifyUserJwt, catchAsync(deleteUser))
-  .put(requestJwt, VerifyUserJwt, catchAsync(updateUserInfo));
+  .get(requestTokenAuthorization, catchAsync(getOneUser))
+  .delete(requestTokenAuthorization, validateUserToken, catchAsync(deleteUser))
+  .put(requestTokenAuthorization, validateUserToken, catchAsync(updateUserInfo));
 
 export default userRouter;

@@ -75,6 +75,30 @@ const ProductsModel = class {
       throw new AppError(`Cannot delete Product ${error}`, 400);
     }
   };
+
+  getProductsByCategory = async (category: string) => {
+    try {
+      const sql = "SELECT * FROM products WHERE category=$1";
+      const conn = await pgClient.connect();
+      const result = await conn.query(sql, [category]);
+      conn.release();
+      return result.rows;
+    } catch (error) {
+      throw new AppError(`Cannot get Product category Product ${error}`, 400);
+    }
+  };
+
+  topProducts = async () => {
+    try {
+      const sql = "SELECT * FROM products ORDER BY price DESC LIMIT 5";
+      const conn = await pgClient.connect();
+      const result = await conn.query(sql);
+      conn.release();
+      return result.rows;
+    } catch (error) {
+      throw new AppError(`Cannot get Top 5 products ${error}`, 400);
+    }
+  };
 };
 
 export default ProductsModel;
