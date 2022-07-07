@@ -6,9 +6,12 @@ import { config } from "dotenv";
 config();
 
 export interface AuthModelProps {
-  user_id?: string;
   firstname: string;
   lastname: string;
+  email: string;
+  password: string;
+}
+export interface AuthLoginModelProps {
   email: string;
   password: string;
 }
@@ -31,7 +34,7 @@ export const AuthModel = class {
     }
   };
 
-  login = async (user: AuthModelProps) => {
+  login = async (user: AuthLoginModelProps) => {
     try {
       const conn = await pgClient.connect();
 

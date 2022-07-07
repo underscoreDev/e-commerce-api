@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { catchAsync } from "../utils/catchAsync";
+import { requestJwt, VerifyUserJwt } from "../controllers/auth.controller";
 import {
   getAllProducts,
   getOneProduct,
@@ -10,12 +11,15 @@ import {
 
 const productRouter = Router();
 
-productRouter.route("/").get(catchAsync(getAllProducts)).post(catchAsync(createProduct));
+productRouter
+  .route("/")
+  .get(catchAsync(getAllProducts))
+  .post(requestJwt, catchAsync(createProduct));
 
 productRouter
   .route("/:id")
-  .get(catchAsync(getOneProduct))
-  .delete(catchAsync(deleteProduct))
-  .put(catchAsync(updateProduct));
+  .get(requestJwt, catchAsync(getOneProduct))
+  .delete(requestJwt, VerifyUserJwt, catchAsync(deleteProduct))
+  .put(requestJwt, VerifyUserJwt, catchAsync(updateProduct));
 
 export default productRouter;
