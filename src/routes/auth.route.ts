@@ -1,7 +1,7 @@
 import { Router } from "express";
+import { register, login } from "../controllers/auth.controller";
 import { catchAsync } from "../middlewares/catchAsyncError.middleware";
-import { requestTokenAuthorization } from "../middlewares/auth.middleware";
-import { register, checkLoginCredentials, login } from "../controllers/auth.controller";
+import { checkLoginCredentials, requestTokenAuthorization } from "../middlewares/auth.middleware";
 
 const authRouter = Router();
 

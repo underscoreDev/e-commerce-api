@@ -1,10 +1,10 @@
 import { Router } from "express";
+import { checkUserId } from "../middlewares/users.middleware";
 import { catchAsync } from "../middlewares/catchAsyncError.middleware";
 import {
   deleteUser,
   getOneUser,
   getAllUsers,
-  checkUserId,
   updateUserInfo,
 } from "../controllers/user.controller";
 import { requestTokenAuthorization, validateUserToken } from "../middlewares/auth.middleware";

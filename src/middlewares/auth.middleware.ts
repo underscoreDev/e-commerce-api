@@ -1,10 +1,16 @@
 /* eslint-disable camelcase */
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { config } from "dotenv";
 import { AuthModelProps } from "../interfaces";
+import { AuthModel } from "../models/auth.model";
 import { AppError } from "./handleAppError.middleware";
 import { NextFunction, Request, Response } from "express";
 
-const { JWT_TOKEN_SECRET } = process.env;
+config();
+
+const { JWT_TOKEN_SECRET, PEPPER } = process.env;
+const Auth = new AuthModel();
 
 export const signJwt = async (user: AuthModelProps) =>
   jwt.sign({ user }, JWT_TOKEN_SECRET as string, {
@@ -41,4 +47,20 @@ export const validateUserToken = async (req: Request, res: Response, next: NextF
   } catch (error) {
     return next(new AppError(`User id doesn't match ${error}`, 401));
   }
+};
+
+export const checkLoginCredentials = async (req: Request, _res: Response, next: NextFunction) => {
+  const { email, password } = req.body;
+  const result = await Auth.login({ email, password });
+
+  if (result.rowCount === 0) {
+    return next(new AppError("Email Address doesn't exist", 400));
+  }
+  // meaning email was found in the database
+  const validUser = result.rows[0];
+
+  // check if password is valid
+  const validPassword = await bcrypt.compare(password + PEPPER, validUser.password);
+
+  validPassword ? next() : next(new AppError("Incorrect password", 400));
 };

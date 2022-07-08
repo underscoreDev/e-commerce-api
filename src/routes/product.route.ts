@@ -1,6 +1,7 @@
 import { Router } from "express";
+import { checkProductId } from "../middlewares/product.middleware";
 import { catchAsync } from "../middlewares/catchAsyncError.middleware";
-import { getByCategory, top5Products, checkProductId } from "../controllers/product.controller";
+import { getByCategory, top5Products } from "../controllers/product.controller";
 import { requestTokenAuthorization, validateUserToken } from "../middlewares/auth.middleware";
 import {
   getAllProducts,

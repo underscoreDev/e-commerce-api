@@ -1,19 +1,7 @@
 import { UserModel } from "../models/user.model";
-import { Request, Response, NextFunction } from "express";
-import { AppError } from "../middlewares/handleAppError.middleware";
+import { Request, Response } from "express";
 
 const Users = new UserModel();
-
-export const checkUserId = async (req: Request, res: Response, next: NextFunction) => {
-  const users = await Users.getAllUsers();
-  const { id } = req.params;
-  const user = users.find((user) => user.user_id === id);
-  if (!user) {
-    throw new AppError("Invalid Id; No user with that Id", 400);
-  } else {
-    next();
-  }
-};
 
 // Get All Users
 export const getAllUsers = async (_req: Request, res: Response) => {
