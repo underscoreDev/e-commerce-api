@@ -1,12 +1,6 @@
 import pgClient from "../database";
 import { AppError } from "../utils/appError";
-
-interface ProductsModelProps {
-  product_id?: string;
-  product_name: string;
-  price: number;
-  category: "headsets" | "earphones" | "speakers";
-}
+import { ProductsModelProps } from "../interfaces";
 
 const ProductsModel = class {
   getAllProducts = async (): Promise<ProductsModelProps[]> => {

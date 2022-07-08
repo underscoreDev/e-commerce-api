@@ -1,21 +1,7 @@
 /* eslint-disable camelcase */
-import { AppError } from "../utils/appError";
 import pgClient from "../database";
-
-export interface OrderType {
-  quantity: string;
-  status: "active" | "completed";
-  user_id: string;
-  product_id: string;
-}
-export interface OrderStatus {
-  status: "active" | "completed" | string;
-  user_id: string;
-}
-
-export interface OrderReturnType extends OrderType {
-  order_id: string;
-}
+import { AppError } from "../utils/appError";
+import { OrderReturnType, OrderStatus, OrderType } from "../interfaces";
 
 const OrderModel = class {
   getOrdersByUser = async (user_id: string): Promise<OrderReturnType[]> => {

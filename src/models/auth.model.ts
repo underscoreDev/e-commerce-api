@@ -1,20 +1,10 @@
-import { AppError } from "../utils/appError";
-import pgClient from "../database";
 import bcrypt from "bcrypt";
 import { config } from "dotenv";
+import pgClient from "../database";
+import { AppError } from "../utils/appError";
+import { AuthModelProps, AuthLoginModelProps } from "../interfaces";
 
 config();
-
-export interface AuthModelProps {
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-}
-export interface AuthLoginModelProps {
-  email: string;
-  password: string;
-}
 
 const { PEPPER, SALT_ROUNDS } = process.env;
 

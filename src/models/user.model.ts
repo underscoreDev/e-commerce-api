@@ -1,14 +1,8 @@
 /* eslint-disable camelcase */
 import { AppError } from "../utils/appError";
 import pgClient from "../database";
-
-export interface UserModelProps {
-  user_id?: string;
-  firstname: string;
-  lastname: string;
-  email: string;
-  password?: string;
-}
+import { UserModelProps } from "../interfaces";
+import { UpdateUserProps } from "../interfaces/index";
 
 export const UserModel = class {
   getAllUsers = async (): Promise<UserModelProps[]> => {
@@ -47,7 +41,7 @@ export const UserModel = class {
     }
   };
 
-  updateUserInfo = async (user: UserModelProps): Promise<UserModelProps[]> => {
+  updateUserInfo = async (user: UpdateUserProps): Promise<UserModelProps[]> => {
     try {
       const sql =
         "UPDATE users SET firstname=$1, lastname=$2, email=$3, WHERE user_id=$4 RETURNING *";
