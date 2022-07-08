@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { catchAsync } from "../utils/catchAsync";
-import { getByCategory, top5Products } from "../controllers/product.controller";
-import { requestTokenAuthorization, validateUserToken } from "../services/authService";
+import { catchAsync } from "../middlewares/catchAsyncError.middleware";
+import { getByCategory, top5Products, checkProductId } from "../controllers/product.controller";
+import { requestTokenAuthorization, validateUserToken } from "../middlewares/auth.middleware";
 import {
   getAllProducts,
   getOneProduct,
@@ -25,8 +25,18 @@ productRouter.route("/top-5").get(requestTokenAuthorization, catchAsync(top5Prod
 
 productRouter
   .route("/:id")
-  .get(requestTokenAuthorization, catchAsync(getOneProduct))
-  .delete(requestTokenAuthorization, validateUserToken, catchAsync(deleteProduct))
-  .put(requestTokenAuthorization, validateUserToken, catchAsync(updateProduct));
+  .get(requestTokenAuthorization, catchAsync(checkProductId), catchAsync(getOneProduct))
+  .delete(
+    requestTokenAuthorization,
+    catchAsync(checkProductId),
+    validateUserToken,
+    catchAsync(deleteProduct)
+  )
+  .put(
+    requestTokenAuthorization,
+    catchAsync(checkProductId),
+    validateUserToken,
+    catchAsync(updateProduct)
+  );
 
 export default productRouter;

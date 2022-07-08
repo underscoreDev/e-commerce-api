@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 import { config } from "dotenv";
 import pgClient from "../database";
-import { AppError } from "../utils/appError";
 import { AuthModelProps, AuthLoginModelProps } from "../interfaces";
+import { AppError } from "../middlewares/handleAppError.middleware";
 
 config();
 

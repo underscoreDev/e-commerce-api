@@ -1,6 +1,6 @@
 import { UserModel } from "../models/user.model";
 import { Request, Response, NextFunction } from "express";
-import { AppError } from "../utils/appError";
+import { AppError } from "../middlewares/handleAppError.middleware";
 
 const Users = new UserModel();
 

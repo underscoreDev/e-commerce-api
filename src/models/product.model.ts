@@ -1,6 +1,6 @@
 import pgClient from "../database";
-import { AppError } from "../utils/appError";
 import { ProductsModelProps } from "../interfaces";
+import { AppError } from "../middlewares/handleAppError.middleware";
 
 const ProductsModel = class {
   getAllProducts = async (): Promise<ProductsModelProps[]> => {
@@ -15,13 +15,13 @@ const ProductsModel = class {
     }
   };
 
-  getOneProduct = async (productId: string): Promise<ProductsModelProps> => {
+  getOneProduct = async (productId: string): Promise<ProductsModelProps[]> => {
     try {
       const sql = "SELECT * FROM products WHERE product_id = $1";
       const conn = await pgClient.connect();
       const result = await conn.query(sql, [productId]);
       conn.release();
-      return result.rows[0];
+      return result.rows;
     } catch (error) {
       throw new AppError(`Cannot Get One Product ${error}`, 400);
     }

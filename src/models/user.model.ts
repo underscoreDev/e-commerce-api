@@ -1,9 +1,9 @@
 /* eslint-disable max-len */
 /* eslint-disable camelcase */
 import pgClient from "../database";
-import { AppError } from "../utils/appError";
 import { UserModelProps } from "../interfaces";
 import { UpdateUserProps } from "../interfaces";
+import { AppError } from "../middlewares/handleAppError.middleware";
 
 export const UserModel = class {
   // Get All Users from the database

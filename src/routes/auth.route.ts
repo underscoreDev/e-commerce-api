@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { catchAsync } from "../utils/catchAsync";
-import { requestTokenAuthorization } from "../services/authService";
+import { catchAsync } from "../middlewares/catchAsyncError.middleware";
+import { requestTokenAuthorization } from "../middlewares/auth.middleware";
 import { register, checkLoginCredentials, login } from "../controllers/auth.controller";
 
 const authRouter = Router();

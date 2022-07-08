@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { catchAsync } from "../utils/catchAsync";
+import { catchAsync } from "../middlewares/catchAsyncError.middleware";
 import { getOneOrder, deleteOrder } from "../controllers/order.controller";
-import { requestTokenAuthorization, validateUserToken } from "../services/authService";
+import { requestTokenAuthorization, validateUserToken } from "../middlewares/auth.middleware";
 import {
   getAllOrders,
   createOrder,

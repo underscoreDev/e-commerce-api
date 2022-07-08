@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { catchAsync } from "../utils/catchAsync";
+import { catchAsync } from "../middlewares/catchAsyncError.middleware";
 import {
   deleteUser,
   getOneUser,
@@ -7,7 +7,7 @@ import {
   checkUserId,
   updateUserInfo,
 } from "../controllers/user.controller";
-import { requestTokenAuthorization, validateUserToken } from "../services/authService";
+import { requestTokenAuthorization, validateUserToken } from "../middlewares/auth.middleware";
 
 const userRouter = Router();
 

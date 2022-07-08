@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
-import { AppError } from "../utils/appError";
 import { AuthModel } from "../models/auth.model";
-import { signJwt } from "../services/authService";
+import { signJwt } from "../middlewares/auth.middleware";
 import { NextFunction, Request, Response } from "express";
+import { AppError } from "../middlewares/handleAppError.middleware";
 
 const { PEPPER } = process.env;
 const Auth = new AuthModel();

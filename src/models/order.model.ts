@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import pgClient from "../database";
-import { AppError } from "../utils/appError";
 import { OrderReturnType, OrderStatus, OrderType } from "../interfaces";
+import { AppError } from "../middlewares/handleAppError.middleware";
 
 const OrderModel = class {
   getOrdersByUser = async (user_id: string): Promise<OrderReturnType[]> => {
