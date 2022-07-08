@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { catchAsync } from "../utils/catchAsync";
 import {
-  getAllUsers,
-  getOneUser,
-  updateUserInfo,
   deleteUser,
+  getOneUser,
+  getAllUsers,
+  checkUserId,
+  updateUserInfo,
 } from "../controllers/user.controller";
 import { requestTokenAuthorization, validateUserToken } from "../services/authService";
 
@@ -14,8 +15,18 @@ userRouter.route("/").get(requestTokenAuthorization, catchAsync(getAllUsers));
 
 userRouter
   .route("/:id")
-  .get(requestTokenAuthorization, catchAsync(getOneUser))
-  .delete(requestTokenAuthorization, validateUserToken, catchAsync(deleteUser))
-  .put(requestTokenAuthorization, validateUserToken, catchAsync(updateUserInfo));
+  .get(requestTokenAuthorization, catchAsync(checkUserId), catchAsync(getOneUser))
+  .delete(
+    requestTokenAuthorization,
+    catchAsync(checkUserId),
+    validateUserToken,
+    catchAsync(deleteUser)
+  )
+  .put(
+    requestTokenAuthorization,
+    catchAsync(checkUserId),
+    validateUserToken,
+    catchAsync(updateUserInfo)
+  );
 
 export default userRouter;

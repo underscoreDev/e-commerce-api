@@ -1,13 +1,15 @@
+/* eslint-disable max-len */
 /* eslint-disable camelcase */
-import { AppError } from "../utils/appError";
 import pgClient from "../database";
+import { AppError } from "../utils/appError";
 import { UserModelProps } from "../interfaces";
-import { UpdateUserProps } from "../interfaces/index";
+import { UpdateUserProps } from "../interfaces";
 
 export const UserModel = class {
+  // Get All Users from the database
   getAllUsers = async (): Promise<UserModelProps[]> => {
     try {
-      const sql = "SELECT * FROM users";
+      const sql = "SELECT user_id, firstname,lastname, email FROM users";
       const conn = await pgClient.connect();
       const result = await conn.query(sql);
       conn.release();
@@ -17,9 +19,10 @@ export const UserModel = class {
     }
   };
 
+  // Get One User
   getOneUser = async (user_id: string): Promise<UserModelProps[]> => {
     try {
-      const sql = "SELECT * FROM users WHERE user_id=$1";
+      const sql = "SELECT user_id, firstname,lastname, email FROM users WHERE user_id=$1";
       const conn = await pgClient.connect();
       const result = await conn.query(sql, [user_id]);
       conn.release();
@@ -29,6 +32,7 @@ export const UserModel = class {
     }
   };
 
+  // DELETE USER
   deleteUser = async (user_id: string): Promise<UserModelProps[]> => {
     try {
       const sql = "DELETE FROM users WHERE user_id=$1";
@@ -41,10 +45,11 @@ export const UserModel = class {
     }
   };
 
+  // UPDATE USER
   updateUserInfo = async (user: UpdateUserProps): Promise<UserModelProps[]> => {
     try {
       const sql =
-        "UPDATE users SET firstname=$1, lastname=$2, email=$3, WHERE user_id=$4 RETURNING *";
+        "UPDATE users SET firstname=$1, lastname=$2, email=$3 WHERE user_id = $4 RETURNING user_id, firstname,lastname,email";
 
       const conn = await pgClient.connect();
 
