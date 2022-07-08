@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { catchAsync } from "../utils/catchAsync";
 import { getOneOrder, deleteOrder } from "../controllers/order.controller";
+import { requestTokenAuthorization, validateUserToken } from "../services/authService";
 import {
   getAllOrders,
   createOrder,
@@ -10,9 +11,20 @@ import {
 
 const orderRouter = Router();
 
-orderRouter.route("/").get(catchAsync(getAllOrders)).post(catchAsync(createOrder));
-orderRouter.route("/:order_id").get(catchAsync(getOneOrder)).delete(catchAsync(deleteOrder));
-orderRouter.route("/user/:user_id").get(catchAsync(getOrdersByUser));
-orderRouter.route("/user/:user_id/:status").get(catchAsync(getUserCompletedOrActiveOrder));
+orderRouter
+  .route("/")
+  .get(requestTokenAuthorization, catchAsync(getAllOrders))
+  .post(requestTokenAuthorization, catchAsync(createOrder));
+
+orderRouter
+  .route("/:order_id")
+  .get(requestTokenAuthorization, validateUserToken, catchAsync(getOneOrder))
+  .delete(requestTokenAuthorization, validateUserToken, catchAsync(deleteOrder));
+
+orderRouter.route("/user/:user_id").get(requestTokenAuthorization, catchAsync(getOrdersByUser));
+
+orderRouter
+  .route("/user/:user_id/:status")
+  .get(requestTokenAuthorization, catchAsync(getUserCompletedOrActiveOrder));
 
 export default orderRouter;

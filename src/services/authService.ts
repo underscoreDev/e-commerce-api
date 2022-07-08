@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 import { NextFunction, Request, Response } from "express";
-import { AuthModelProps } from "../models/auth.model";
 import { AppError } from "../utils/appError";
 import jwt from "jsonwebtoken";
+import { AuthModelProps } from "../interfaces";
 
 const { JWT_TOKEN_SECRET } = process.env;
 
