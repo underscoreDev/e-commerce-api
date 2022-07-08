@@ -10,8 +10,8 @@ export const getAllProducts = async (_req: Request, res: Response) => {
 };
 
 export const getOneProduct = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const products = await Products.getOneProduct(id);
+  const { product_id } = req.params;
+  const products = await Products.getOneProduct(product_id);
   return res.status(200).json({ status: "success", data: { products } });
 };
 
@@ -22,8 +22,8 @@ export const createProduct = async (req: Request, res: Response) => {
 };
 
 export const deleteProduct = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  await Products.deleteProduct(id);
+  const { product_id } = req.params;
+  await Products.deleteProduct(product_id);
   return res.status(200).json({ status: "Product deleted Successfully", data: null });
 };
 
@@ -39,13 +39,13 @@ export const top5Products = async (_req: Request, res: Response) => {
 };
 
 export const updateProduct = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { product_id } = req.params;
   const { product_name, price, category } = req.body;
   const products = await Products.updateProduct({
     product_name,
     price,
     category,
-    product_id: id,
+    product_id,
   });
   return res.status(200).json({ status: "Product updated Successfully", data: { products } });
 };

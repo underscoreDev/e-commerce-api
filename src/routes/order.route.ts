@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { catchAsync } from "../middlewares/catchAsyncError.middleware";
 import { getOneOrder, deleteOrder } from "../controllers/order.controller";
-import { requestTokenAuthorization, validateUserToken } from "../middlewares/auth.middleware";
+import { requestTokenAuthorization } from "../middlewares/auth.middleware";
 import {
   getAllOrders,
   createOrder,
@@ -18,8 +18,8 @@ orderRouter
 
 orderRouter
   .route("/:order_id")
-  .get(requestTokenAuthorization, validateUserToken, catchAsync(getOneOrder))
-  .delete(requestTokenAuthorization, validateUserToken, catchAsync(deleteOrder));
+  .get(requestTokenAuthorization, catchAsync(getOneOrder))
+  .delete(requestTokenAuthorization, catchAsync(deleteOrder));
 
 orderRouter.route("/user/:user_id").get(requestTokenAuthorization, catchAsync(getOrdersByUser));
 

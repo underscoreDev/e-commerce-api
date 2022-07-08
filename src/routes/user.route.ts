@@ -14,18 +14,18 @@ const userRouter = Router();
 userRouter.route("/").get(requestTokenAuthorization, catchAsync(getAllUsers));
 
 userRouter
-  .route("/:id")
+  .route("/:user_id")
   .get(requestTokenAuthorization, catchAsync(checkUserId), catchAsync(getOneUser))
   .delete(
     requestTokenAuthorization,
     catchAsync(checkUserId),
-    validateUserToken,
+    catchAsync(validateUserToken),
     catchAsync(deleteUser)
   )
   .put(
     requestTokenAuthorization,
     catchAsync(checkUserId),
-    validateUserToken,
+    catchAsync(validateUserToken),
     catchAsync(updateUserInfo)
   );
 

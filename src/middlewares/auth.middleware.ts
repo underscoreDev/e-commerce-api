@@ -32,20 +32,20 @@ export const requestTokenAuthorization = (req: Request, res: Response, next: Nex
 };
 
 export const validateUserToken = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { user_id } = req.body;
-    const authorizationHeader = req.headers.authorization?.split(" ")[1];
+  const { user_id } = req.params;
+  const authorizationHeader = req.headers.authorization?.split(" ")[1];
 
-    const decoded = jwt.verify(
-      authorizationHeader ? authorizationHeader : "",
-      JWT_TOKEN_SECRET as string
-    );
-    if (typeof decoded !== "string" && decoded.user.user_id !== user_id) {
-      throw new AppError("User doesn't match", 400);
-    }
+  const decoded = jwt.verify(
+    authorizationHeader ? authorizationHeader : "",
+    JWT_TOKEN_SECRET as string
+  );
+
+  if (typeof decoded === "string") {
+    return;
+  } else if (decoded.user.user_id !== user_id) {
+    throw new AppError("User doesn't match", 401);
+  } else {
     next();
-  } catch (error) {
-    return next(new AppError(`User id doesn't match ${error}`, 401));
   }
 };
 
