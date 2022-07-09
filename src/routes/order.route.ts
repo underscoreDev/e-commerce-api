@@ -23,8 +23,6 @@ orderRouter
 
 orderRouter.route("/user/:user_id").get(requestTokenAuthorization, catchAsync(getOrdersByUser));
 
-orderRouter
-  .route("/user/:user_id/:status")
-  .get(requestTokenAuthorization, catchAsync(getUserCompletedOrActiveOrder));
+orderRouter.route("/user/:user_id/:status").get(requestTokenAuthorization, catchAsync(getUserCompletedOrActiveOrder));
 
 export default orderRouter;

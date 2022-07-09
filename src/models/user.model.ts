@@ -53,12 +53,7 @@ export const UserModel = class {
 
       const conn = await pgClient.connect();
 
-      const result = await conn.query(sql, [
-        user.firstname,
-        user.lastname,
-        user.email,
-        user.user_id,
-      ]);
+      const result = await conn.query(sql, [user.firstname, user.lastname, user.email, user.user_id]);
 
       conn.release();
       return result.rows;

@@ -18,9 +18,7 @@ productRouter
   .get(requestTokenAuthorization, catchAsync(getAllProducts))
   .post(requestTokenAuthorization, catchAsync(createProduct));
 
-productRouter
-  .route("/category/:category")
-  .get(requestTokenAuthorization, catchAsync(getByCategory));
+productRouter.route("/category/:category").get(requestTokenAuthorization, catchAsync(getByCategory));
 
 productRouter.route("/top-5").get(requestTokenAuthorization, catchAsync(top5Products));
 

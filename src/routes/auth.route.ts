@@ -6,8 +6,6 @@ import { checkLoginCredentials, requestTokenAuthorization } from "../middlewares
 const authRouter = Router();
 
 authRouter.route("/register").post(catchAsync(register));
-authRouter
-  .route("/login")
-  .post(requestTokenAuthorization, catchAsync(checkLoginCredentials), catchAsync(login));
+authRouter.route("/login").post(requestTokenAuthorization, catchAsync(checkLoginCredentials), catchAsync(login));
 
 export default authRouter;

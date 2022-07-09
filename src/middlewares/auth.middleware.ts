@@ -20,10 +20,7 @@ export const signJwt = async (user: AuthModelProps) =>
 export const requestTokenAuthorization = (req: Request, res: Response, next: NextFunction) => {
   try {
     const authorizationHeader = req.headers.authorization?.split(" ")[1];
-    const decoded = jwt.verify(
-      authorizationHeader ? authorizationHeader : "",
-      JWT_TOKEN_SECRET as string
-    );
+    const decoded = jwt.verify(authorizationHeader ? authorizationHeader : "", JWT_TOKEN_SECRET as string);
     res.locals.userData = decoded;
     next();
   } catch (error) {
@@ -35,10 +32,7 @@ export const validateUserToken = async (req: Request, res: Response, next: NextF
   const { user_id } = req.params;
   const authorizationHeader = req.headers.authorization?.split(" ")[1];
 
-  const decoded = jwt.verify(
-    authorizationHeader ? authorizationHeader : "",
-    JWT_TOKEN_SECRET as string
-  );
+  const decoded = jwt.verify(authorizationHeader ? authorizationHeader : "", JWT_TOKEN_SECRET as string);
 
   if (typeof decoded === "string") {
     return;

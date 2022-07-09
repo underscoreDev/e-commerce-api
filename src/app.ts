@@ -18,9 +18,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/orders", orderRouter);
 app.use("/api/v1/products", productRouter);
 
-app.all("*", (req, _res, next) =>
-  next(new AppError(`Cannot find ${req.originalUrl} on this server`, 400))
-);
+app.all("*", (req, _res, next) => next(new AppError(`Cannot find ${req.originalUrl} on this server`, 400)));
 
 app.use(globalErrorHandler);
 
