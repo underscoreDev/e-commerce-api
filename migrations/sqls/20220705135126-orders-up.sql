@@ -6,5 +6,5 @@ CREATE TABLE orders (
     quantity INTEGER,
     status ORDERSTATUS,
     user_id uuid REFERENCES users(user_id),
-    product_id uuid REFERENCES products(product_id)
+    product_id uuid REFERENCES products(product_id) UNIQUE NOT NULL
 );

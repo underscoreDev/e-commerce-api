@@ -11,11 +11,10 @@ const { PEPPER, SALT_ROUNDS } = process.env;
 export const AuthModel = class {
   createUser = async (user: AuthModelProps): Promise<AuthModelProps> => {
     try {
-      const sql =
-        "INSERT INTO users (firstname, lastname, email, password) VALUES ($1,$2,$3,$4) RETURNING *";
+      const sql = "INSERT INTO users (firstname, lastname, email, password) VALUES ($1,$2,$3,$4) RETURNING *";
       const conn = await pgClient.connect();
 
-      const hash = await bcrypt.hash(user.password + PEPPER, Number(SALT_ROUNDS as string));
+      const hash = await bcrypt.hash(user.password + PEPPER, SALT_ROUNDS as string);
       const result = await conn.query(sql, [user.firstname, user.lastname, user.email, hash]);
       conn.release();
       return result.rows[0];

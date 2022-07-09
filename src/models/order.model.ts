@@ -6,9 +6,9 @@ import { AppError } from "../middlewares/handleAppError.middleware";
 const OrderModel = class {
   getOrdersByUser = async (user_id: string): Promise<OrderReturnType[]> => {
     try {
-      const sql = `SELECT * FROM orders WHERE user_id=${user_id}`;
+      const sql = "SELECT * FROM orders WHERE user_id=$1";
       const conn = await pgClient.connect();
-      const result = await conn.query(sql);
+      const result = await conn.query(sql, [user_id]);
       conn.release();
       return result.rows;
     } catch (error) {
@@ -16,14 +16,11 @@ const OrderModel = class {
     }
   };
 
-  getUserCompletedOrActiveOrder = async ({
-    user_id,
-    status,
-  }: OrderStatus): Promise<OrderReturnType[]> => {
+  getUserCompletedOrActiveOrder = async ({ user_id, status }: OrderStatus): Promise<OrderReturnType[]> => {
     try {
-      const sql = `SELECT * FROM orders WHERE user_id=${user_id} AND status=${status}`;
+      const sql = "SELECT * FROM orders WHERE user_id=$1 AND status=$2";
       const conn = await pgClient.connect();
-      const result = await conn.query(sql);
+      const result = await conn.query(sql, [user_id, status]);
       conn.release();
       return result.rows;
     } catch (error) {
@@ -43,11 +40,11 @@ const OrderModel = class {
     }
   };
 
-  getOneOrder = async (order_id: string) => {
+  getOneOrder = async (order_id: string): Promise<OrderReturnType[]> => {
     try {
-      const sql = `SELECT * FROM orders WHERE order_id=${order_id}`;
+      const sql = "SELECT * FROM orders WHERE order_id=$1";
       const conn = await pgClient.connect();
-      const result = await conn.query(sql);
+      const result = await conn.query(sql, [order_id]);
       conn.release();
       return result.rows;
     } catch (error) {
@@ -55,11 +52,11 @@ const OrderModel = class {
     }
   };
 
-  deleteOrder = async (order_id: string) => {
+  deleteOrder = async (order_id: string): Promise<OrderReturnType[]> => {
     try {
-      const sql = `DELETE FROM orders WHERE order_id=${order_id}`;
+      const sql = "DELETE FROM orders WHERE order_id=$1";
       const conn = await pgClient.connect();
-      const result = await conn.query(sql);
+      const result = await conn.query(sql, [order_id]);
       conn.release();
       return result.rows;
     } catch (error) {
@@ -67,16 +64,15 @@ const OrderModel = class {
     }
   };
 
-  createOrder = async (order: OrderType) => {
+  createOrder = async (order: OrderType): Promise<OrderReturnType[]> => {
     try {
-      // eslint-disable-next-line max-len
-      const sql = `INSERT INTO orders (quantity,status,user_id,product_id) VALUES (${order.quantity},${order.status},${order.user_id},${order.product_id}) RETURNING *`;
+      const sql = "INSERT INTO orders (quantity,status,user_id,product_id) VALUES ($1,$2,$3,$4) RETURNING *";
       const conn = await pgClient.connect();
-      const result = await conn.query(sql);
+      const result = await conn.query(sql, [order.quantity, order.status, order.user_id, order.product_id]);
       conn.release();
       return result.rows;
     } catch (error) {
-      throw new AppError(`Cannot get create order ${error}`, 400);
+      throw new AppError(`Cannot create order ${error}`, 400);
     }
   };
 };
