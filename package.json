@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint . --ext .ts",
     "prettier": "prettier --config .prettierrc \"src/**/*.ts\" --write",
-    "test": "set ENV=test && db-migrate --env test up && jasmine && db-migrate --env test down && db-migrate db:drop test",
+    "test": "set ENV=test && db-migrate --env test up && jasmine && db-migrate db:drop test",
     "dev": "tsc-watch --noClear -p tsconfig.json --onSuccess \"node ./build/server.js\"",
     "jasmine": "jasmine"
   },
