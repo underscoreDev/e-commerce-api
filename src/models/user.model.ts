@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable camelcase */
 import pgClient from "../database";
 import { UserModelProps } from "../interfaces";
 import { UpdateUserProps } from "../interfaces";
@@ -49,6 +47,7 @@ export const UserModel = class {
   updateUserInfo = async (user: UpdateUserProps): Promise<UserModelProps[]> => {
     try {
       const sql =
+        // eslint-disable-next-line max-len
         "UPDATE users SET firstname=$1, lastname=$2, email=$3 WHERE user_id = $4 RETURNING user_id, firstname,lastname,email";
 
       const conn = await pgClient.connect();

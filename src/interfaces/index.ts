@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // ORDERS
 export interface OrderType {
   quantity: string;
@@ -27,11 +28,17 @@ export interface AuthLoginModelProps {
 }
 
 // pRODUCT
+
+export enum ProductCategoryValues {
+  earphones = "earphones",
+  speakers = "speakers",
+  headsets = "headsets",
+}
 export interface ProductsModelProps {
   product_id?: string;
   product_name: string;
   price: number;
-  category: "headsets" | "earphones" | "speakers";
+  category: ProductCategoryValues;
 }
 
 // USER

@@ -5,10 +5,10 @@
   "main": "src/server.ts",
   "scripts": {
     "lint": "eslint . --ext .ts",
+    "create:db": "db-migrate db:create store",
     "prettier": "prettier --config .prettierrc \"src/**/*.ts\" --write",
-    "test": "set ENV=test && db-migrate --env test up && jasmine && db-migrate db:drop test",
     "dev": "tsc-watch --noClear -p tsconfig.json --onSuccess \"node ./build/server.js\"",
-    "jasmine": "jasmine"
+    "test": "set ENV=test && db-migrate db:create store_test && db-migrate --env test up && jasmine && db-migrate db:drop store_test"
   },
   "keywords": [
     "Typescript",

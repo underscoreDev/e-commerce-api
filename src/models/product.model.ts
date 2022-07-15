@@ -1,6 +1,7 @@
 import pgClient from "../database";
 import { ProductsModelProps } from "../interfaces";
 import { AppError } from "../middlewares/handleAppError.middleware";
+import { ProductCategoryValues } from "../interfaces/index";
 
 const ProductsModel = class {
   getAllProducts = async (): Promise<ProductsModelProps[]> => {
@@ -63,7 +64,7 @@ const ProductsModel = class {
     }
   };
 
-  getProductsByCategory = async (category: string) => {
+  getProductsByCategory = async (category: ProductCategoryValues) => {
     try {
       const sql = "SELECT * FROM products WHERE category=$1";
       const conn = await pgClient.connect();
