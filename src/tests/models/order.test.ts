@@ -1,62 +1,92 @@
-import { ProductCategoryValues } from "../../interfaces";
+import { OrderStatusType, ProductCategoryValues } from "../../interfaces";
+import OrderModel from "../../models/order.model";
+import { AuthModel } from "../../models/auth.model";
+import { UserModel } from "../../models/user.model";
 import ProductsModel from "../../models/product.model";
 
+const Auth = new AuthModel();
+const User = new UserModel();
+const Order = new OrderModel();
 const Product = new ProductsModel();
-describe("Productmodel tests", () => {
-  const values = { product_name: "x99mark 2 Earphones", price: 766, category: ProductCategoryValues.speakers };
 
-  it("should have a get All Products method", () => {
-    expect(Product.getAllProducts).toBeDefined();
-  });
-  it("should have a get One Product method", () => {
-    expect(Product.getOneProduct).toBeDefined();
-  });
-  it("should have a update Products method", () => {
-    expect(Product.updateProduct).toBeDefined();
-  });
-  it("should have a delete Products method", () => {
-    expect(Product.deleteProduct).toBeDefined();
-  });
-  it("should have a get Product by category method", () => {
-    expect(Product.getProductsByCategory).toBeDefined();
-  });
-  it("should have a top products method", () => {
-    expect(Product.topProducts).toBeDefined();
-  });
+describe("Ordermodel tests", () => {
+  let product_id: string;
+  let user_id: string;
 
-  it("should create a new product", async () => {
-    const product = await Product.createProduct(values);
-    expect(product.product_id).toBeDefined();
-  });
+  beforeAll(async () => {
+    // create a user
+    await Auth.createUser({ firstname: "grey", lastname: "dom", email: "gd@g.com", password: "udacity" });
+    // get the user id
+    const allUsers = await User.getAllUsers();
+    const oneUserId = allUsers[0].user_id;
+    // set the user_id variable to the created User Id
+    user_id = oneUserId;
 
-  it("should get all products", async () => {
-    const products = await Product.getAllProducts();
-    expect(products.length).toBeGreaterThan(0);
-  });
-
-  it("should get one product", async () => {
+    // create a product
+    await Product.createProduct({ product_name: "XX99 Headset", price: 450, category: ProductCategoryValues.headsets });
+    // get the product id
     const allProducts = await Product.getAllProducts();
-    const oneProductId = allProducts[0]?.product_id;
-    const product = await Product.getOneProduct(oneProductId as string);
-    expect(product[0].product_id).toEqual(oneProductId);
+    const oneProductId = allProducts[0].product_id as string;
+    product_id = oneProductId;
   });
 
-  it("should get product by category", async () => {
-    const product = await Product.getProductsByCategory(ProductCategoryValues.speakers);
-    expect(product[0].category).toEqual(ProductCategoryValues.speakers);
+  it("should have a get All Orders method", () => {
+    expect(Order.getAllOrders).toBeDefined();
   });
 
-  it("should list the top 5 products", async () => {
-    const products = await Product.topProducts();
-    expect(products.length).toBeGreaterThan(0);
+  it("should have a get One Order method", () => {
+    expect(Order.getOneOrder).toBeDefined();
   });
 
-  it("should delete product", async () => {
-    const allProducts = await Product.getAllProducts();
-    const oneProductId = allProducts[0]?.product_id;
+  it("should have a delete Orders method", () => {
+    expect(Order.deleteOrder).toBeDefined();
+  });
 
-    const product = await Product.deleteProduct(oneProductId as string);
+  it("should have a create Orders method", () => {
+    expect(Order.createOrder).toBeDefined();
+  });
 
-    expect(product.length).toBeFalsy();
+  it("should have a getUserCompletedOrActiveOrder Orders method", () => {
+    expect(Order.getUserCompletedOrActiveOrder).toBeDefined();
+  });
+
+  it("should have a getOrdersByUser Orders method", () => {
+    expect(Order.getOrdersByUser).toBeDefined();
+  });
+
+  it("should create a new Order", async () => {
+    const order = await Order.createOrder({ quantity: 2, status: OrderStatusType.active, user_id, product_id });
+    expect(order[0].order_id).toBeDefined();
+  });
+
+  it("should get all Orders", async () => {
+    const Orders = await Order.getAllOrders();
+    expect(Orders.length).toBeGreaterThan(0);
+  });
+
+  it("should get one Order", async () => {
+    const allOrders = await Order.getAllOrders();
+    const oneOrderId = allOrders[0]?.order_id;
+    const res = await Order.getOneOrder(oneOrderId as string);
+    expect(res[0].order_id).toEqual(oneOrderId);
+  });
+
+  it("should get Order by status", async () => {
+    const order = await Order.getUserCompletedOrActiveOrder({ user_id, status: OrderStatusType.active });
+    expect(order[0].status).toEqual(OrderStatusType.active);
+  });
+
+  it("should getOrdersByUser", async () => {
+    const orders = await Order.getOrdersByUser(user_id);
+    expect(orders.length).toBeGreaterThan(0);
+  });
+
+  it("should delete Order", async () => {
+    const allOrders = await Order.getAllOrders();
+    const oneOrderId = allOrders[0]?.order_id;
+
+    const res = await Order.deleteOrder(oneOrderId as string);
+
+    expect(res.length).toBeFalsy();
   });
 });

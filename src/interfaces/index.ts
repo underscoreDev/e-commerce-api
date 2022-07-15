@@ -1,13 +1,20 @@
 /* eslint-disable no-unused-vars */
 // ORDERS
+
+export enum OrderStatusType {
+  active = "active",
+  completed = "completed",
+  speakers = "speakers",
+}
+
 export interface OrderType {
-  quantity: string;
-  status: "active" | "completed";
+  quantity: number;
+  status: OrderStatusType;
   user_id: string;
   product_id: string;
 }
 export interface OrderStatus {
-  status: "active" | "completed" | string;
+  status: OrderStatusType | string;
   user_id: string;
 }
 
