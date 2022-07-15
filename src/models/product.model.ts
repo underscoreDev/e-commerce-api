@@ -64,7 +64,7 @@ const ProductsModel = class {
     }
   };
 
-  getProductsByCategory = async (category: ProductCategoryValues) => {
+  getProductsByCategory = async (category: ProductCategoryValues | string) => {
     try {
       const sql = "SELECT * FROM products WHERE category=$1";
       const conn = await pgClient.connect();

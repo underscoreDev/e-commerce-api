@@ -7,7 +7,7 @@ const { ENV, LOCAL_HOST, POSTGRES_USER, POSTGRES_PORT, POSTGRES_DEV_DB, POSTGRES
 
 const pgClient = new Pool({
   host: LOCAL_HOST,
-  port: Number(POSTGRES_PORT),
+  port: POSTGRES_PORT as unknown as number,
   database: ENV === "dev" ? POSTGRES_DEV_DB : POSTGRES_TEST_DB,
   password: POSTGRES_PASSWORD,
   user: POSTGRES_USER,
