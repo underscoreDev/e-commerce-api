@@ -33,7 +33,6 @@ export const validateUserToken = async (req: Request, res: Response, next: NextF
   const authorizationHeader = req.headers.authorization?.split(" ")[1];
 
   const decoded = jwt.verify(authorizationHeader ? authorizationHeader : "", JWT_TOKEN_SECRET as string);
-
   if (typeof decoded === "string") {
     return;
   } else if (decoded.user.user_id !== user_id) {

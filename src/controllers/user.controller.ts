@@ -21,7 +21,7 @@ export const getOneUser = async (req: Request, res: Response) => {
 export const deleteUser = async (req: Request, res: Response) => {
   const { user_id } = req.params;
   await Users.deleteUser(user_id);
-  res.status(200).json({ status: "User Deleted successfully", data: null });
+  res.status(204).json({ status: "User Deleted successfully", data: null });
 };
 
 // Update User
