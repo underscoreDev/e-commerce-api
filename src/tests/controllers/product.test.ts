@@ -22,13 +22,14 @@ describe("Product API Tests", () => {
     // get the user token
     token = response.body.token;
 
+    // create a product
     const res = await request.post("/api/v1/products").auth(token, { type: "bearer" }).send({
       product_name: "Test product 1",
       price: 260,
       category: ProductCategoryValues.speakers,
     });
+    // get the product id
     product_id = res.body.data.products.product_id;
-    console.log(res.body.data.products);
   });
 
   it("should create new product", async () => {
