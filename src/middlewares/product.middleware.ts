@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import ProductsModel from "../models/product.model";
 import { Request, Response, NextFunction } from "express";
 import { AppError } from "../middlewares/handleAppError.middleware";

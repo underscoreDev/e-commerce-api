@@ -25,7 +25,7 @@ productRouter.route("/top-5").get(requestTokenAuthorization, catchAsync(top5Prod
 productRouter
   .route("/:product_id")
   .get(requestTokenAuthorization, catchAsync(checkProductId), catchAsync(getOneProduct))
-  .delete(requestTokenAuthorization, catchAsync(checkProductId), catchAsync(deleteProduct))
-  .put(requestTokenAuthorization, catchAsync(checkProductId), catchAsync(updateProduct));
+  .put(requestTokenAuthorization, catchAsync(checkProductId), catchAsync(updateProduct))
+  .delete(requestTokenAuthorization, catchAsync(checkProductId), catchAsync(deleteProduct));
 
 export default productRouter;

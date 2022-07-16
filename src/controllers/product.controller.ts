@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { Request, Response } from "express";
 import ProductsModel from "../models/product.model";
 
@@ -18,13 +17,13 @@ export const getOneProduct = async (req: Request, res: Response) => {
 export const createProduct = async (req: Request, res: Response) => {
   const { product_name, price, category } = req.body;
   const products = await Products.createProduct({ product_name, price, category });
-  res.status(200).json({ status: "Product Created Successfully", data: { products } });
+  res.status(201).json({ status: "Product Created Successfully", data: { products } });
 };
 
 export const deleteProduct = async (req: Request, res: Response) => {
   const { product_id } = req.params;
   await Products.deleteProduct(product_id);
-  return res.status(200).json({ status: "Product deleted Successfully", data: null });
+  return res.status(204).json({ status: "Product deleted Successfully", data: null });
 };
 
 export const getByCategory = async (req: Request, res: Response) => {

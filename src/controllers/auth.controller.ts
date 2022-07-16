@@ -1,13 +1,14 @@
+import { Request, Response } from "express";
 import { AuthModel } from "../models/auth.model";
 import { signJwt } from "../middlewares/auth.middleware";
-import { Request, Response } from "express";
+
 const Auth = new AuthModel();
 
 export const register = async (req: Request, res: Response) => {
   const { firstname, lastname, email, password } = req.body;
   const user = await Auth.createUser({ firstname, email, lastname, password });
   const token = await signJwt(user);
-  return res.status(200).json({ status: "Signup successful", token });
+  return res.status(201).json({ status: "Signup successful", token });
 };
 
 export const login = async (req: Request, res: Response) => {

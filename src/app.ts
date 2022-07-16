@@ -3,8 +3,8 @@ import authRouter from "./routes/auth.route";
 import orderRouter from "./routes/order.route";
 import productRouter from "./routes/product.route";
 import express, { Application, Request, Response } from "express";
-import { globalErrorHandler } from "./controllers/handleAppError.controller";
 import { AppError } from "./middlewares/handleAppError.middleware";
+import { globalErrorHandler } from "./controllers/handleAppError.controller";
 
 const app: Application = express();
 app.use(express.json());
