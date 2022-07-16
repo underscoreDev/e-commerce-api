@@ -23,7 +23,6 @@ describe("User Endpoint Tests", () => {
 
     const res = await request.get("/api/v1/users").auth(token, { type: "bearer" });
     user_id = res.body.data.users[1].user_id;
-    console.log(user_id);
   });
 
   it("should get all users", async () => {
