@@ -8,6 +8,7 @@ describe("Order API Tests", () => {
   let token: string;
   let pid: string;
   let uid: string;
+  let order_id: string;
 
   beforeAll(async () => {
     // register a new user
@@ -29,7 +30,6 @@ describe("Order API Tests", () => {
       price: 260,
       category: ProductCategoryValues.speakers,
     });
-    console.log(res.body.data);
     // get the product id
     pid = res.body.data.products.product_id;
   });
@@ -39,6 +39,7 @@ describe("Order API Tests", () => {
       .post("/api/v1/orders")
       .auth(token, { type: "bearer" })
       .send({ quantity: 2, status: OrderStatusType.active, user_id: uid, product_id: pid });
+    order_id = res.body.data.order[0].order_id;
     expect(res.status).toBe(201);
   });
 
@@ -48,35 +49,25 @@ describe("Order API Tests", () => {
     expect(res.body.data).toBeDefined();
   });
 
-  // it("should get orders by category", async () => {
-  //   const res = await request.get("/api/v1/orders/category/earphones").auth(token, { type: "bearer" });
-  //   expect(res.status).toBe(200);
-  //   expect(res.body.data.orders[0].category).toBe("earphones");
-  // });
+  it("should get one order", async () => {
+    const res = await request.get(`/api/v1/orders/${order_id}`).auth(token, { type: "bearer" });
+    expect(res.status).toBe(200);
+  });
 
-  // it("should get the top 5 orders", async () => {
-  //   const res = await request.get("/api/v1/orders/top-5").auth(token, { type: "bearer" });
-  //   expect(res.status).toBe(200);
-  //   expect(res.body.data.orders.length).toBeLessThanOrEqual(5);
-  // });
+  it("should get orders by user id", async () => {
+    const res = await request.get(`/api/v1/orders/user/${uid}`).auth(token, { type: "bearer" });
+    expect(res.status).toBe(200);
+    expect(res.body.data.order[0].user_id).toBe(uid);
+  });
 
-  // it("should get one product", async () => {
-  //   const res = await request.get(`/api/v1/orders/${product_id}`).auth(token, { type: "bearer" });
-  //   expect(res.status).toBe(200);
-  //   expect(res.body.data.orders[0].product_id).toBe(product_id);
-  // });
+  it("should get order by status (active) orders", async () => {
+    const res = await request.get(`/api/v1/orders/user/${uid}/active`).auth(token, { type: "bearer" });
+    expect(res.status).toBe(200);
+    expect(res.body.data.order[0].status).toBe("active");
+  });
 
-  // it("should update a product", async () => {
-  //   const res = await request
-  //     .put(`/api/v1/orders/${product_id}`)
-  //     .auth(token, { type: "bearer" })
-  //     .send({ ...product, product_id });
-  //   expect(res.status).toBe(200);
-  //   expect(res.body.data.orders[0]).toEqual({ ...product, product_id });
-  // });
-
-  // it("should delete product", async () => {
-  //   const res = await request.delete(`/api/v1/orders/${product_id}`).auth(token, { type: "bearer" });
-  //   expect(res.status).toBe(204);
-  // });
+  it("should delete order", async () => {
+    const res = await request.delete(`/api/v1/orders/${order_id}`).auth(token, { type: "bearer" });
+    expect(res.status).toBe(204);
+  });
 });

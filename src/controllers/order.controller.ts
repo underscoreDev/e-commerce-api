@@ -18,7 +18,7 @@ export const getOneOrder = async (req: Request, res: Response) => {
 export const deleteOrder = async (req: Request, res: Response) => {
   const { order_id } = req.params;
   await Order.deleteOrder(order_id);
-  res.status(200).json({ message: "Order deleted successfully ", data: null });
+  res.status(204).json({ message: "Order deleted successfully ", data: null });
 };
 
 export const createOrder = async (req: Request, res: Response) => {

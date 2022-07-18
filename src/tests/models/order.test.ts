@@ -26,7 +26,6 @@ describe("Ordermodel tests", () => {
     await Product.createProduct({ product_name: "XX99 Headset", price: 450, category: ProductCategoryValues.headsets });
     // get the product id
     const allProducts = await Product.getAllProducts();
-    console.log(allProducts);
     const oneProductId = allProducts[allProducts.length - 1].product_id as string;
     product_id = oneProductId;
   });
@@ -57,7 +56,6 @@ describe("Ordermodel tests", () => {
 
   it("should create a new Order", async () => {
     const order = await Order.createOrder({ quantity: 2, status: OrderStatusType.active, user_id, product_id });
-    console.log(order);
     expect(order[0].order_id).toBeDefined();
   });
 
