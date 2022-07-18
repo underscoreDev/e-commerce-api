@@ -29,6 +29,7 @@ describe("Order API Tests", () => {
       price: 260,
       category: ProductCategoryValues.speakers,
     });
+    console.log(res.body.data);
     // get the product id
     pid = res.body.data.products.product_id;
   });

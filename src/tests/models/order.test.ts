@@ -26,7 +26,8 @@ describe("Ordermodel tests", () => {
     await Product.createProduct({ product_name: "XX99 Headset", price: 450, category: ProductCategoryValues.headsets });
     // get the product id
     const allProducts = await Product.getAllProducts();
-    const oneProductId = allProducts[0].product_id as string;
+    console.log(allProducts);
+    const oneProductId = allProducts[allProducts.length - 1].product_id as string;
     product_id = oneProductId;
   });
 

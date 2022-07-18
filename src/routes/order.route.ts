@@ -26,10 +26,3 @@ orderRouter.route("/user/:user_id").get(requestTokenAuthorization, catchAsync(ge
 orderRouter.route("/user/:user_id/:status").get(requestTokenAuthorization, catchAsync(getUserCompletedOrActiveOrder));
 
 export default orderRouter;
-
-/*
-malt - #150 - 10pcs
-watermelon - #700
-petrol - #800
-bottle water - #300 - 3pcs
-*/
