@@ -1,8 +1,8 @@
-import { OrderStatusType, ProductCategoryValues } from "../../interfaces";
 import OrderModel from "../../models/order.model";
 import { AuthModel } from "../../models/auth.model";
 import { UserModel } from "../../models/user.model";
 import ProductsModel from "../../models/product.model";
+import { OrderStatusType, ProductCategoryValues } from "../../interfaces";
 
 const Auth = new AuthModel();
 const User = new UserModel();
@@ -56,6 +56,7 @@ describe("Ordermodel tests", () => {
 
   it("should create a new Order", async () => {
     const order = await Order.createOrder({ quantity: 2, status: OrderStatusType.active, user_id, product_id });
+    console.log(order);
     expect(order[0].order_id).toBeDefined();
   });
 

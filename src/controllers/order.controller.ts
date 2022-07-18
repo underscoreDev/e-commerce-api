@@ -24,7 +24,7 @@ export const deleteOrder = async (req: Request, res: Response) => {
 export const createOrder = async (req: Request, res: Response) => {
   const { quantity, status, product_id, user_id } = req.body;
   const order = await Order.createOrder({ quantity, status, product_id, user_id });
-  res.status(200).json({ message: "Order Created Successfully", data: { order } });
+  res.status(201).json({ message: "Order Created Successfully", data: { order } });
 };
 
 export const getUserCompletedOrActiveOrder = async (req: Request, res: Response) => {

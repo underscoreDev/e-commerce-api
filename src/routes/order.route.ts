@@ -3,8 +3,8 @@ import { catchAsync } from "../middlewares/catchAsyncError.middleware";
 import { getOneOrder, deleteOrder } from "../controllers/order.controller";
 import { requestTokenAuthorization } from "../middlewares/auth.middleware";
 import {
-  getAllOrders,
   createOrder,
+  getAllOrders,
   getOrdersByUser,
   getUserCompletedOrActiveOrder,
 } from "../controllers/order.controller";
@@ -26,3 +26,10 @@ orderRouter.route("/user/:user_id").get(requestTokenAuthorization, catchAsync(ge
 orderRouter.route("/user/:user_id/:status").get(requestTokenAuthorization, catchAsync(getUserCompletedOrActiveOrder));
 
 export default orderRouter;
+
+/*
+malt - #150 - 10pcs
+watermelon - #700
+petrol - #800
+bottle water - #300 - 3pcs
+*/

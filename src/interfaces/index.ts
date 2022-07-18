@@ -4,7 +4,6 @@
 export enum OrderStatusType {
   active = "active",
   completed = "completed",
-  speakers = "speakers",
 }
 
 export interface OrderType {

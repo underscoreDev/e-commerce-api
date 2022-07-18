@@ -10,19 +10,19 @@ describe("User Endpoint Tests", () => {
     firstname: "greg",
     password: "greg123",
     lastname: "godwill",
-    email: "greg@greg.com",
+    email: "usergreg@greg.com",
   };
 
   beforeAll(async () => {
     // register a new user
     const response = await request
       .post("/api/v1/auth/register")
-      .send({ firstname: "firstname", email: "emaijjl", lastname: "lastname", password: "password" });
+      .send({ firstname: "UserFirstname", email: "UserEmail", lastname: "UserLastname", password: "UserPassword" });
     // get the user token
     token = response.body.token;
 
     const res = await request.get("/api/v1/users").auth(token, { type: "bearer" });
-    user_id = res.body.data.users[1].user_id;
+    user_id = res.body.data.users[res.body.data.users.length - 1].user_id;
   });
 
   it("should get all users", async () => {
