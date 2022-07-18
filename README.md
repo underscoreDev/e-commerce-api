@@ -51,12 +51,12 @@ LOCAL_HOST_PORT=8989
 LOCAL_HOST=127.0.0.1
 POSTGRES_USER=postgres
 POSTGRES_DEV_DB=store
-POSTGRES_PASSWORD=Godis-4me
+POSTGRES_PASSWORD=<user should Enter their postgres password>
 POSTGRES_TEST_DB=store_test
-BCRYPT_PASSWORD=Godis-4me
+BCRYPT_PASSWORD=<user should enter a bycrypt password of their choice>
 SALT_ROUNDS=10
-PEPPER=verySecurePassword
-JWT_TOKEN_SECRET=The-Best-Underscore-Developer-Super-Secret-Json-Web-Token
+PEPPER=<user should enter a pepper password of their choice>
+JWT_TOKEN_SECRET=<user should enter a jwt password of their choice>
 
 ```
 
@@ -71,13 +71,11 @@ enter the password when it prompts for a password
 
 \l
 
-# If "store" database is not present
-
-create database store;
-
-````
+# If "store" database is not present, run
+`create database store`
 
 Next, you need to run the database migrations:
+````
 ```bash
 db-migrate up
 ````
@@ -111,7 +109,7 @@ yarn test
 
 ## Authors
 
-- **Godswill Edet** - _Other work_ - [underscoredev](https://github.com/underscoreDev)
+- **Godswill Edet** - _Checkout Some of my Other works_ - [underscoredev](https://github.com/underscoreDev)
 
 ## Acknowledgments
 
